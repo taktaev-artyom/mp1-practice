@@ -5,35 +5,35 @@
 #define dlina 30
 #define kolvotovarov 10
 
-char nazvanie[kolvotovarov][dlina] = {"Фотоаппарат Nikon","Смартфон Xiaomi", 
-    "Телевизор Samsung","Игровая приставка PlayStation","Наушники HyperX", 
-    "Портативная колонка JBL","Ноутбук ASUS","Стиральная машина Siemens", 
-    "Принтер Canon","Холодильник Toshiba"}; 
-char codes[kolvotovarov][5] = {"1337", "1487", "1234", "8008", "1508", "1221", 
-    "1256", "0007", "0124", "1488"}; 
+char nazvanie[kolvotovarov][dlina] = {"Фотоаппарат Nikon","Смартфон Xiaomi",
+    "Телевизор Samsung","Игровая приставка PlayStation","Наушники HyperX",
+    "Портативная колонка JBL","Ноутбук ASUS","Стиральная машина Siemens",
+    "Принтер Canon","Холодильник Toshiba"};
+char codes[kolvotovarov][5] = {"1337", "1487", "1234", "8008", "1508", "1221",
+    "1256", "0007", "0124", "1488"};
 int discount[kolvotovarov];
 int f = 0;
-int kolichestvo[kolvotovarov]; 
+int kolichestvo[kolvotovarov];
 
 void skidki(int min_skidka, int max_skidka)
 {
     int i;
-    srand((unsigned int) time(0)); 
+    srand((unsigned int) time(0));
     for (i = 0; i < kolvotovarov; i++)
     {
-        discount[i] = min_skidka + rand() % (max_skidka - min_skidka); 
+        discount[i] = min_skidka + rand() % (max_skidka - min_skidka);
     }
 }
 
 void menu()
 {
-    printf("Начало работы.\n"); 
-    printf("Введите 1, чтобы сканировать товар.\n"); 
-    printf("Введите 2, чтобы вывести информацию о товаре.\n"); 
-    printf("Введите 3, чтобы добавить этот товар в чек.\n"); 
-    printf("Введите 4, чтобы вывести чек.\n"); 
-    printf("Введите 5, чтобы рассчитать общую стоимость покупки.\n"); 
-    printf("Введите 0, чтобы выйти из программы.\n"); 
+    printf("Начало работы.\n");
+    printf("Введите 1, чтобы сканировать товар.\n");
+    printf("Введите 2, чтобы вывести информацию о товаре.\n");
+    printf("Введите 3, чтобы добавить этот товар в чек.\n");
+    printf("Введите 4, чтобы вывести чек.\n");
+    printf("Введите 5, чтобы рассчитать общую стоимость покупки.\n");
+    printf("Введите 0, чтобы выйти из программы.\n");
 }
 
 int findcodeid(int id)
@@ -61,8 +61,6 @@ void vivodimeni(int id)
         f = 1;
     }
 }
-
-
 
 void main()
 {
