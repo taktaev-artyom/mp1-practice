@@ -23,7 +23,7 @@ void deleteV(Vector x)
 	x.n = 0;
 	free(x.mas);
 }
-Vector addition(Vector a, Vector b)
+Vector addition(Vector a, Vector b, int* f)
 {
 	Vector rez = create(a.n);
 	Vector error = create(0);
@@ -31,6 +31,7 @@ Vector addition(Vector a, Vector b)
 	if (a.n != b.n)
 	{
 		printf("Vectors' dimensions are not equal!\n");
+		*f = 1;
 		return error;
 	}
 	for (i = 0; i < a.n; i++)
@@ -39,7 +40,7 @@ Vector addition(Vector a, Vector b)
 	}
 	return rez;
 }
-Vector subtraction(Vector a, Vector b)
+Vector subtraction(Vector a, Vector b, int* f)
 {
 	Vector rez = create(a.n);
 	Vector error = create(0);
@@ -47,6 +48,7 @@ Vector subtraction(Vector a, Vector b)
 	if (a.n != b.n)
 	{
 		printf("Vectors' dimensions are not equal!\n");
+		*f = 1;
 		return error;
 	}
 	for (i = 0; i < a.n; i++)
@@ -55,14 +57,15 @@ Vector subtraction(Vector a, Vector b)
 	}
 	return rez;
 }
-double scalar(Vector a, Vector b)
+double scalar(Vector a, Vector b, int* f)
 {
 	double rez = 0;
 	int i;
 	if (a.n != b.n)
 	{
 		printf("Vectors' dimensions are not equal!\n");
-		return -0.5723807128034712;
+		*f = 1;
+		return 0;
 	}
 	for (i = 0; i < a.n; i++)
 	{
@@ -70,18 +73,20 @@ double scalar(Vector a, Vector b)
 	}
 	return rez;
 }
-double angle(Vector a, Vector b)
+double angle(Vector a, Vector b, int* f)
 {
 	double cos;
-	if ((length(a) == 0) || (length(b) == 0))
+	if ((length(a, f) == 0) || (length(b, f) == 0))
 	{
 		printf("ERROR/n");
+		*f = 1;
+		return 0;
 	}
-	cos = scalar(a, b) / (length(a) * length(b));
+	cos = scalar(a, b, f) / (length(a, f) * length(b, f));
 	return acos(cos * 180 / M_PI);
 }
-double length(Vector x)
+double length(Vector x, int* f)
 {
 	double rez = 0;
-	return sqrt(scalar(x, x));
+	return sqrt(scalar(x, x, f));
 }
