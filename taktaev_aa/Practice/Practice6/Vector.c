@@ -11,11 +11,6 @@ Vector create(int n)
 	int i;
 	x.n = n;
 	x.mas = (double*)malloc(x.n * sizeof(double));
-	printf("Please enter values of vector's components:\n");
-	for (i = 0; i < x.n; i++)
-	{
-		scanf("%lf", &x.mas[i]);
-	}
 	return x;
 }
 void deleteV(Vector x)
@@ -83,7 +78,7 @@ double angle(Vector a, Vector b, int* f)
 		return 0;
 	}
 	cos = scalar(a, b, f) / (length(a, f) * length(b, f));
-	return acos(cos * 180 / M_PI);
+	return acos(cos) * 180 / M_PI;
 }
 double length(Vector x, int* f)
 {
