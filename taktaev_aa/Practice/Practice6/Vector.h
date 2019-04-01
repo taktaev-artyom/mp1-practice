@@ -10,7 +10,7 @@ typedef struct
 }Vector;
 
 Vector create(int n);
-void delete(Vector x);
+void deleteV(Vector x);
 Vector addition(Vector a, Vector b, int* f);
 Vector subtraction(Vector a, Vector b, int* f);
 double scalar(Vector a, Vector b, int* f);

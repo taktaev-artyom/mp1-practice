@@ -33,4 +33,8 @@ void main()
 	printf("An angle between vector x and vector y ", ang, "\n");
 	printf("A length of vector x is ", lenX, "\n");
 	printf("A length of vector y is ", lenY, "\n");
+	deleteV(x);
+	deleteV(y);
+	deleteV(sum);
+	deleteV(diff);
 }
