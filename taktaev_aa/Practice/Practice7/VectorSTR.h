@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <math.h>
 struct Vector
 {
 	double* mas;
@@ -15,7 +17,8 @@ struct Vector
 	Vector& operator*(int k);
 	Vector& operator+=(const Vector& x);
 	Vector& operator-=(const Vector& x);
-	Vector& operator*=(int k);
+	Vector& operator*=(const Vector& x);
 	const Vector& operator=(const Vector& x);
+	double& operator[](int i) { return mas[i]; }
+	double Vector_Len();
 };
-double Vector_Len(Vector& x);
