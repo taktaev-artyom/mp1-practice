@@ -82,6 +82,5 @@ double angle(Vector a, Vector b, int* f)
 }
 double length(Vector x, int* f)
 {
-    double rez = 0;
     return sqrt(scalar(x, x, f));
 }
