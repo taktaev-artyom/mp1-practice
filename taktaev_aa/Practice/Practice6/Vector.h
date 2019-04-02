@@ -5,8 +5,8 @@
 
 typedef struct 
 {
-	int n;//razmer
-	double* mas;
+    int n;//razmer
+    double* mas;
 }Vector;
 
 Vector create(int n);
