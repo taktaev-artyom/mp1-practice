@@ -5,7 +5,7 @@ using namespace std;
 void main()
 {
 	int num1, num2;
-	double errmas[] = { 1.26, 2.37, 3.48, 4.89, 5.98, 6.107, 7.125 };
+	double errmas[] = { 1.26, 2.35, 3.44, 4.79, 5.88, 6.97, 7.116 };
     Vector sum, sum1, diff, diff1, plusmuzhik, minusmuzhik, multiplybymuzhik, umn;
     double scal, muzhik, mas0;
 	cout << "//When an error occurs, the number will be written. The error number goes before a point";
