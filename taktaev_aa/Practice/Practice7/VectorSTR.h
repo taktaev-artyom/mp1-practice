@@ -17,7 +17,7 @@ struct Vector
 	Vector& operator*(double k);
 	Vector& operator+=(const Vector& x);
 	Vector& operator-=(const Vector& x);
-	Vector& operator*=(const Vector& x);
+	double operator*=(const Vector& x);
 	const Vector& operator=(const Vector& x);
 	double& operator[](int i);
 	double Vector_Len();

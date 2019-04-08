@@ -12,6 +12,7 @@ Vector::Vector(int _n)
 Vector::Vector(const Vector& x)
 {
 	n = x.n;
+	mas = new double[n];
 	for (int i = 0; i < n; i++)
 	{
 		mas[i] = x.mas[i];
@@ -24,20 +25,22 @@ Vector::~Vector()
 Vector& Vector::operator+(const Vector& x)
 {
 	if (n != x.n) throw 1;
+	Vector* rez = new Vector(n);
 	for (int i = 0; i < n; i++)
 	{
-		mas[i] = mas[i] + x.mas[i];
+		rez->mas[i] = mas[i] + x.mas[i];
 	}
-	return *this;
+	return *rez;
 }
 Vector& Vector::operator-(const Vector& x)
 {
 	if (n != x.n) throw 2;
+	Vector* rez = new Vector(n);
 	for (int i = 0; i < n; i++)
 	{
-		mas[i] = mas[i] - x.mas[i];
+		rez->mas[i] = mas[i] - x.mas[i];
 	}
-	return *this;
+	return *rez;
 }
 double Vector::operator*(const Vector& x)
 {
@@ -52,54 +55,56 @@ double Vector::operator*(const Vector& x)
 }
 Vector& Vector::operator+(double k)
 {
+	Vector* rez = new Vector(n);
 	for (int i = 0; i < n; i++)
 	{
-		mas[i] = mas[i] + k;
+		rez->mas[i] = mas[i] + k;
 	}
-	return *this;
+	return *rez;
 }
 Vector& Vector::operator-(double k)
 {
+	Vector* rez = new Vector(n);
 	for (int i = 0; i < n; i++)
 	{
-		mas[i] = mas[i] - k;
+		rez->mas[i] = mas[i] - k;
 	}
-	return *this;
+	return *rez;
 }
 Vector& Vector::operator*(double k) 
 {
+	Vector* rez = new Vector(n);
 	for (int i = 0; i < n; i++)
 	{
-		mas[i] = mas[i] * k;
+		rez->mas[i] = mas[i] * k;
 	}
-	return *this;
+	return *rez;
 }
 Vector& Vector::operator+=(const Vector& x)
 {
 	if (n != x.n) throw 4;
+	Vector* rez = new Vector(*this);
 	for (int i = 0; i < n; i++)
 	{
-		mas[i] += x.mas[i];
+		rez->mas[i] += x.mas[i];
 	}
-	return *this;
+	return *rez;
 }
 Vector& Vector::operator-=(const Vector& x)
 {
 	if (n != x.n) throw 5;
+	Vector* rez = new Vector(*this);
 	for (int i = 0; i < n; i++)
 	{
-		mas[i] -= x.mas[i];
+		rez->mas[i] -= x.mas[i];
 	}
-	return *this;
+	return *rez;
 }
-Vector& Vector::operator*=(const Vector& x)
+double Vector::operator*=(const Vector& x)
 {
-	if (n != x.n) throw 6;
-	for (int i = 0; i < n; i++)
-	{
-		mas[i] *= x.mas[i];
-	}
-	return *this;
+	double rez = 0;
+    rez = (*this) * x;
+    return rez;
 }
 const Vector& Vector::operator=(const Vector& x)
 {
