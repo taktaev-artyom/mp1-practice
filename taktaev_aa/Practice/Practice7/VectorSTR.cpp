@@ -4,8 +4,9 @@ Vector::Vector()
 	n = 0;
 	mas = nullptr;
 }
-Vector::Vector(int n)
+Vector::Vector(int _n)
 {
+	n = _n;
 	mas = new double[n];
 }
 Vector::Vector(const Vector& x)
@@ -53,7 +54,7 @@ double Vector::operator*(const Vector& x)
 	return rez;
 
 }
-Vector& Vector::operator+(int k)
+Vector& Vector::operator+(double k)
 {
 	Vector rez;
 	rez.mas = new double[n];
@@ -63,7 +64,7 @@ Vector& Vector::operator+(int k)
 	}
 	return rez;
 }
-Vector& Vector::operator-(int k)
+Vector& Vector::operator-(double k)
 {
 	Vector rez;
 	rez.mas = new double[n];
@@ -73,7 +74,7 @@ Vector& Vector::operator-(int k)
 	}
 	return rez;
 }
-Vector& Vector::operator*(int k) 
+Vector& Vector::operator*(double k) 
 {
 	Vector rez;
 	rez.mas = new double[n];
@@ -119,7 +120,18 @@ const Vector& Vector::operator=(const Vector& x)
 	}
 	return *this;
 }
+double& Vector::operator[](int i)
+{
+	if (!mas) throw 7;
+	return mas[i];
+}
 double Vector::Vector_Len()
 {
 	return sqrt((*this) * (*this));
+}
+void Vector::Output()
+{
+    for (int i = 0; i < n; i++)
+        std::cout << mas[i] << " ";
+	std::cout << std::endl;
 }
