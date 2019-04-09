@@ -4,13 +4,15 @@ Vector::Vector()
 	n = 0;
 	mas = nullptr;
 }
-Vector::Vector(int n)
+Vector::Vector(int _n)
 {
+	n = _n;
 	mas = new double[n];
 }
 Vector::Vector(const Vector& x)
 {
 	n = x.n;
+	mas = new double[n];
 	for (int i = 0; i < n; i++)
 	{
 		mas[i] = x.mas[i];
@@ -23,24 +25,22 @@ Vector::~Vector()
 Vector& Vector::operator+(const Vector& x)
 {
 	if (n != x.n) throw 1;
-	Vector rez;
-	rez.mas = new double[n];
+	Vector* rez = new Vector(n);
 	for (int i = 0; i < n; i++)
 	{
-		rez.mas[i] = mas[i] + x.mas[i];
+		rez->mas[i] = mas[i] + x.mas[i];
 	}
-	return rez;
+	return *rez;
 }
 Vector& Vector::operator-(const Vector& x)
 {
 	if (n != x.n) throw 2;
-	Vector rez;
-	rez.mas = new double[n];
+	Vector* rez = new Vector(n);
 	for (int i = 0; i < n; i++)
 	{
-		rez.mas[i] = mas[i] - x.mas[i];
+		rez->mas[i] = mas[i] - x.mas[i];
 	}
-	return rez;
+	return *rez;
 }
 double Vector::operator*(const Vector& x)
 {
@@ -53,73 +53,81 @@ double Vector::operator*(const Vector& x)
 	return rez;
 
 }
-Vector& Vector::operator+(int k)
+Vector& Vector::operator+(double k)
 {
-	Vector rez;
-	rez.mas = new double[n];
+	Vector* rez = new Vector(n);
 	for (int i = 0; i < n; i++)
 	{
-		rez.mas[i] = mas[i] + k;
+		rez->mas[i] = mas[i] + k;
 	}
-	return rez;
+	return *rez;
 }
-Vector& Vector::operator-(int k)
+Vector& Vector::operator-(double k)
 {
-	Vector rez;
-	rez.mas = new double[n];
+	Vector* rez = new Vector(n);
 	for (int i = 0; i < n; i++)
 	{
-		rez.mas[i] = mas[i] - k;
+		rez->mas[i] = mas[i] - k;
 	}
-	return rez;
+	return *rez;
 }
-Vector& Vector::operator*(int k) 
+Vector& Vector::operator*(double k) 
 {
-	Vector rez;
-	rez.mas = new double[n];
+	Vector* rez = new Vector(n);
 	for (int i = 0; i < n; i++)
 	{
-		rez.mas[i] = mas[i] * k;
+		rez->mas[i] = mas[i] * k;
 	}
-	return rez;
+	return *rez;
 }
 Vector& Vector::operator+=(const Vector& x)
 {
 	if (n != x.n) throw 4;
+	Vector* rez = new Vector(*this);
 	for (int i = 0; i < n; i++)
 	{
-		mas[i] += x.mas[i];
+		rez->mas[i] += x.mas[i];
 	}
-	return *this;
+	return *rez;
 }
 Vector& Vector::operator-=(const Vector& x)
 {
 	if (n != x.n) throw 5;
+	Vector* rez = new Vector(*this);
 	for (int i = 0; i < n; i++)
 	{
-		mas[i] -= x.mas[i];
+		rez->mas[i] -= x.mas[i];
 	}
-	return *this;
+	return *rez;
 }
-Vector& Vector::operator*=(const Vector& x)
+double Vector::operator*=(const Vector& x)
 {
-	if (n != x.n) throw 6;
-	for (int i = 0; i < n; i++)
-	{
-		mas[i] *= x.mas[i];
-	}
-	return *this;
+	double rez = 0;
+    rez = (*this) * x;
+    return rez;
 }
 const Vector& Vector::operator=(const Vector& x)
 {
 	n = x.n;
+	mas = new double[n];
 	for (int i = 0; i < n; i++)
 	{
 		mas[i] = x.mas[i];
 	}
 	return *this;
 }
+double& Vector::operator[](int i)
+{
+	if (!mas) throw 7;
+	return mas[i];
+}
 double Vector::Vector_Len()
 {
 	return sqrt((*this) * (*this));
+}
+void Vector::Output()
+{
+    for (int i = 0; i < n; i++)
+        std::cout << mas[i] << " ";
+	std::cout << std::endl;
 }
