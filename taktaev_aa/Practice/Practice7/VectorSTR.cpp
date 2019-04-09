@@ -124,7 +124,8 @@ double Vector::Vector_Len()
 }
 void Vector::Output()
 {
-    for (int i = 0; i < n; i++)
-        std::cout << mas[i] << " ";
-	std::cout << std::endl;
+	std::cout << "(";
+    for (int i = 0; i < n - 1; i++)
+        std::cout << mas[i] << ", ";
+	std::cout << mas[n - 1] << ")" << std::endl;
 }
