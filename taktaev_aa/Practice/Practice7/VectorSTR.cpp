@@ -28,7 +28,7 @@ Vector::~Vector()
 }
 Vector Vector::operator+(const Vector& x)
 {
-	if (n != x.n) throw "Dimention ERROR +";
+	if (n != x.n) throw "Dimension ERROR +";
 	Vector rez(n);
 	for (int i = 0; i < n; i++)
 	{
@@ -38,7 +38,7 @@ Vector Vector::operator+(const Vector& x)
 }
 Vector Vector::operator-(const Vector& x)
 {
-	if (n != x.n) throw "Dimention ERROR -";
+	if (n != x.n) throw "Dimension ERROR -";
 	Vector rez(n);
 	for (int i = 0; i < n; i++)
 	{
@@ -48,7 +48,7 @@ Vector Vector::operator-(const Vector& x)
 }
 double Vector::operator*(const Vector& x)
 {
-	if (n != x.n) throw "Dimention ERROR *";
+	if (n != x.n) throw "Dimension ERROR *";
 	double rez = 0;
 	for (int i = 0; i < n; i++)
 	{
@@ -85,7 +85,7 @@ Vector Vector::operator*(double k)
 }
 Vector& Vector::operator+=(const Vector& x)
 {
-	if (n != x.n) throw "Dimention ERROR +=";
+	if (n != x.n) throw "Dimension ERROR +=";
 	for (int i = 0; i < n; i++)
 	{
 		mas[i] = mas[i] + x.mas[i];
@@ -95,7 +95,7 @@ Vector& Vector::operator+=(const Vector& x)
 Vector& Vector::operator-=(const Vector& x)
 {
 
-	if (n != x.n) throw "Dimention ERROR -=";
+	if (n != x.n) throw "Dimension ERROR -=";
 	for (int i = 0; i < n; i++)
 	{
 		mas[i] = mas[i] - x.mas[i];
