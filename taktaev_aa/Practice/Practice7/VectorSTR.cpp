@@ -7,7 +7,11 @@ Vector::Vector()
 Vector::Vector(int _n)
 {
 	n = _n;
-	mas = new double[n];
+	mas = new double[_n];
+	for (int i = 0; i < n; i++)
+	{
+		mas[i] = 0;
+	}
 }
 Vector::Vector(const Vector& x)
 {
@@ -22,93 +26,86 @@ Vector::~Vector()
 {
 	delete[]mas;
 }
-Vector& Vector::operator+(const Vector& x)
+Vector Vector::operator+(const Vector& x)
 {
-	if (n != x.n) throw 1;
-	Vector* rez = new Vector(n);
+	if (n != x.n) throw "Dimention ERROR +";
+	Vector rez(n);
 	for (int i = 0; i < n; i++)
 	{
-		rez->mas[i] = mas[i] + x.mas[i];
+		rez.mas[i] = mas[i] + x.mas[i];
 	}
-	return *rez;
+	return rez;
 }
-Vector& Vector::operator-(const Vector& x)
+Vector Vector::operator-(const Vector& x)
 {
-	if (n != x.n) throw 2;
-	Vector* rez = new Vector(n);
+	if (n != x.n) throw "Dimention ERROR -";
+	Vector rez(n);
 	for (int i = 0; i < n; i++)
 	{
-		rez->mas[i] = mas[i] - x.mas[i];
+		rez.mas[i] = mas[i] - x.mas[i];
 	}
-	return *rez;
+	return rez;
 }
 double Vector::operator*(const Vector& x)
 {
-	if (n != x.n) throw 3;
+	if (n != x.n) throw "Dimention ERROR *";
 	double rez = 0;
 	for (int i = 0; i < n; i++)
 	{
-		rez += mas[i] * x.mas[i];
+		rez = rez + mas[i] * x.mas[i];
 	}
 	return rez;
-
 }
-Vector& Vector::operator+(double k)
+Vector Vector::operator+(double k)
 {
-	Vector* rez = new Vector(n);
+	Vector rez(n);
 	for (int i = 0; i < n; i++)
 	{
-		rez->mas[i] = mas[i] + k;
+		rez.mas[i] = mas[i] + k;
 	}
-	return *rez;
+	return rez;
 }
-Vector& Vector::operator-(double k)
+Vector Vector::operator-(double k)
 {
-	Vector* rez = new Vector(n);
+	Vector rez(n);
 	for (int i = 0; i < n; i++)
 	{
-		rez->mas[i] = mas[i] - k;
+		rez.mas[i] = mas[i] - k;
 	}
-	return *rez;
+	return rez;
 }
-Vector& Vector::operator*(double k) 
+Vector Vector::operator*(double k) 
 {
-	Vector* rez = new Vector(n);
+	Vector rez(n);
 	for (int i = 0; i < n; i++)
 	{
-		rez->mas[i] = mas[i] * k;
+		rez.mas[i] = mas[i] * k;
 	}
-	return *rez;
+	return rez;
 }
 Vector& Vector::operator+=(const Vector& x)
 {
-	if (n != x.n) throw 4;
-	Vector* rez = new Vector(*this);
+	if (n != x.n) throw "Dimention ERROR +=";
 	for (int i = 0; i < n; i++)
 	{
-		rez->mas[i] += x.mas[i];
+		mas[i] = mas[i] + x.mas[i];
 	}
-	return *rez;
+	return *this;
 }
 Vector& Vector::operator-=(const Vector& x)
 {
-	if (n != x.n) throw 5;
-	Vector* rez = new Vector(*this);
+
+	if (n != x.n) throw "Dimention ERROR -=";
 	for (int i = 0; i < n; i++)
 	{
-		rez->mas[i] -= x.mas[i];
+		mas[i] = mas[i] - x.mas[i];
 	}
-	return *rez;
-}
-double Vector::operator*=(const Vector& x)
-{
-	double rez = 0;
-    rez = (*this) * x;
-    return rez;
+	return *this;
 }
 const Vector& Vector::operator=(const Vector& x)
 {
 	n = x.n;
+	delete[] mas;
 	mas = new double[n];
 	for (int i = 0; i < n; i++)
 	{
@@ -116,9 +113,9 @@ const Vector& Vector::operator=(const Vector& x)
 	}
 	return *this;
 }
-double& Vector::operator[](int i)
+double Vector::operator[](int i)
 {
-	if (!mas) throw 7;
+	if (!mas) throw "Index ERROR - out of array size";
 	return mas[i];
 }
 double Vector::Vector_Len()

@@ -5,9 +5,8 @@ using namespace std;
 void main()
 {
 	int num1, num2;
-	double errmas[] = { 1.26, 2.35, 3.44, 4.79, 5.88, 6.97, 7.116 };
-    Vector sum, sum1, diff, diff1, plusmuzhik, minusmuzhik, multiplybymuzhik, umn;
-    double scal, muzhik, mas0;
+    Vector sum, diff, plusmuzhik, minusmuzhik, multiplybymuzhik;
+    double scal = 0, muzhik, mas0 = 0;
 	cout << "//When an error occurs, the number will be written. The error number goes before a point";
 	cout << "and the line number goes after the point." << endl;
     cout << "Enter the first vector's dimension:" << endl;
@@ -31,35 +30,76 @@ void main()
 	plusmuzhik = x + muzhik;
 	minusmuzhik = y - muzhik;
 	multiplybymuzhik = x * muzhik;
+	Vector sum1(x.n), diff1(x.n);
 	try
 	{
 		sum = x + y;
-		sum1 += x;
-		diff = x - y;
-		diff1 -= y;
-		scal = x * y;
-		umn = x;
-		umn *= y;
-		mas0 = x[0];
+		cout << "x + y = " << endl;
+		sum.Output();
 	}
-	catch (int k)
+	catch (char* k)
 	{
-		cout << "!!!ERROR number" << errmas[k-1] << endl;
-		//return;
+		cout << k << endl;
 	}
-	cout << "x + y = " << endl;
+	try
+	{
+		sum1 += x;
+		cout << "x +=  " << endl;
+		sum1.Output();
+	}
+	catch (char* k)
+	{
+		cout << k << endl;
+	}
+	try
+	{
+		diff = x - y;
+		cout << "x - y = " << endl;
+		diff.Output();
+	}
+	catch (char* k)
+	{
+		cout << k << endl;
+	}
+	try
+	{
+		diff1 -= y;
+		cout << "y -=  " << endl;
+		diff1.Output();
+	}
+	catch (char* k)
+	{
+		cout << k << endl;
+	}
+	try
+	{
+		scal = x * y;
+		cout << "x * y = " << scal << endl;
+	}
+	catch (char* k)
+	{
+		cout << k << endl;
+	}
+	try
+	{
+		mas0 = x[0];
+		cout << "x[0]= " << mas0 << endl;
+	}
+	catch (char* k)
+	{
+		cout << k << endl;
+	}
+	/*cout << "x + y = " << endl;
 	sum.Output();
-	cout << "0 += x " << endl;
+	cout << "x += 0 " << endl;
 	sum1.Output();
 	cout << "x - y = " << endl;
 	diff.Output();
-	cout << "0 -= y " << endl;
+	cout << "y -= 0 " << endl;
 	diff1.Output();
 	cout << "x * y = " << scal << endl;
-	cout << "x *= y " << endl;
-	umn.Output();
 	cout << "x[0]= " << mas0 <<endl;
-	cout << "x + muzhik = " << endl;
+	cout << "x + muzhik = " << endl;*/
 	plusmuzhik.Output();
 	cout << "y - muzhik = " << endl;
 	minusmuzhik.Output();
