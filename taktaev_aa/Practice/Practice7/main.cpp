@@ -30,11 +30,11 @@ void main()
 	plusmuzhik = x + muzhik;
 	minusmuzhik = y - muzhik;
 	multiplybymuzhik = x * muzhik;
-	Vector sum1(x.n), diff1(x.n);
+	Vector sum1(x.n), diff1(y.n);
 	try
 	{
 		sum = x + y;
-		cout << "x + y = " << endl;
+		cout << "x + y = ";
 		sum.Output();
 	}
 	catch (char* k)
@@ -44,7 +44,7 @@ void main()
 	try
 	{
 		sum1 += x;
-		cout << "x +=  " << endl;
+		cout << "0 += x ";
 		sum1.Output();
 	}
 	catch (char* k)
@@ -54,7 +54,7 @@ void main()
 	try
 	{
 		diff = x - y;
-		cout << "x - y = " << endl;
+		cout << "x - y = ";
 		diff.Output();
 	}
 	catch (char* k)
@@ -64,7 +64,7 @@ void main()
 	try
 	{
 		diff1 -= y;
-		cout << "y -=  " << endl;
+		cout << "0 -= y ";
 		diff1.Output();
 	}
 	catch (char* k)
@@ -89,21 +89,11 @@ void main()
 	{
 		cout << k << endl;
 	}
-	/*cout << "x + y = " << endl;
-	sum.Output();
-	cout << "x += 0 " << endl;
-	sum1.Output();
-	cout << "x - y = " << endl;
-	diff.Output();
-	cout << "y -= 0 " << endl;
-	diff1.Output();
-	cout << "x * y = " << scal << endl;
-	cout << "x[0]= " << mas0 <<endl;
-	cout << "x + muzhik = " << endl;*/
+	cout << "x + number = ";
 	plusmuzhik.Output();
-	cout << "y - muzhik = " << endl;
+	cout << "y - number = ";
 	minusmuzhik.Output();
-	cout << "x * muzhik = " << endl;
+	cout << "x * number = ";
 	multiplybymuzhik.Output();
 	cout << "The length of x is " << x.Vector_Len() << endl;
 	cout << "The length of y is " << y.Vector_Len() << endl;
