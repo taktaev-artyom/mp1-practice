@@ -1,5 +1,4 @@
 #include "WhatToDo.h"
-#include <fstream>
 
 Time::Time()
 {
@@ -11,11 +10,11 @@ Time::Time(unsigned int _hour, unsigned int _min)
 {
 	if ((_hour >= 24) || (_hour < 0))
 	{
-		throw "Invalid time - hour";
+		throw "Hour error";
 	}
 	if ((_min > 59) || (_min < 0))
 	{
-		throw "Invalid time - min";
+		throw "Minute error";
 	}
 	hour = _hour;
 	min = _min;
@@ -27,101 +26,53 @@ Time::Time(const Time & _Time)
 	min = _Time.min;
 }
 
-Time::~Time()
-{
-	hour = 0;
-	min = 0;
-}
-
-unsigned int Time::getTime_hour()
-{
-	return hour;
-}
-
-unsigned int Time::getTime_min()
-{
-	return min;
-}
-
-Time Time::putTime_hour(unsigned int _hour)
-{
-	if ((_hour >= 24) || (_hour < 0))
-	{
-		throw "Invalid time - hour";
-	}
-	hour = _hour;
-	return *this;
-}
-
-Time Time::putTime_min(unsigned int _min)
-{
-	if ((_min > 59) || (_min < 0))
-	{
-		throw "Invalid time - min";
-	}
-	min = _min;
-	return *this;
-}
-
-Time Time::operator+(const Time & _Time)
-{
-	Time tmp(hour, min);
-	if (min + _Time.min >= 60)
-	{
-		tmp.hour++;
-		tmp.min = (min + _Time.min) % 60;
-	}
-	if (tmp.hour + _Time.hour >= 24)
-	{
-		tmp.hour = (tmp.hour + _Time.hour) % 24;
-		//Date++;
-	}
-	return tmp;
-}
-
 const Time & Time::operator=(const Time & _Time)
 {
 	hour = _Time.hour;
 	min = _Time.min;
 }
 
-void Time::print_time()
+std::ostream & operator<<(std::ostream & x, const Time & _Time)
 {
-
+	if (_Time.hour < 10)
+		x << "0" << _Time.hour << ":";
+	else
+		x << _Time.hour << ":";
+	if (_Time.min < 10)
+		x << "0" << _Time.min;
+	else
+		x << _Time.min;
+	return x;
 }
 
 /////////////////////////////////////////////////////////////////////////
 
 Date::Date()
 {
-	day = 1;
-	mon = 1;
-	year = 1;
+	day = 0;
+	mon = 0;
+	year = 0;
 }
 
 Date::Date(unsigned int _day, unsigned int _mon, unsigned int _year)
 {
-	if ((_day < 0) || (_day > 31))
+	if (_day > 31)
 	{
-		throw "Invalid date - day";
+		throw "Day error";
 	}
-	if ((_mon < 0) || (_mon > 12))
+	if (_mon > 12)
 	{
-		throw "Invalid date - month";
+		throw "Month error";
 	}
-	if (_year < 0)
-	{
-		throw "Invalid date - year";
-	}
-	if (((_year % 400) == 0) || ((_year % 100 != 0) && (_year % 4 == 0)))
+	if ((_year % 400 == 0) || ((_year % 100 != 0) && (_year % 4 == 0)))
 	{
 		if ((_mon == 2) && (_day > 29))
-			throw "Invalid date - month #2";
+			throw "February error";
 	}
 	else
 	{
 		if ((_mon == 2) && (_day > 28))
-			throw "Invalid date - month #2";
+			throw "February error (leap year)";
 	}
 	if ((_mon == 4) || (_mon == 6) || (_mon == 9) || (_mon == 11))
 	{
@@ -138,13 +89,6 @@ Date::Date(const Date & _Date)
 	day = _Date.day;
 	mon = _Date.mon;
 	year = _Date.year;
-}
-
-Date::~Date()
-{
-	day = 0;
-	mon = 0;
-	year = 0;
 }
 
 unsigned int Date::getDate_day()
@@ -164,19 +108,19 @@ unsigned int Date::getDate_year()
 
 Date Date::putDate_day(unsigned int _day)
 {
-	if ((_day < 0) || (_day > 31))
-	{
-		throw "Invalid date - day";
-	}
 	if (((year % 400) == 0) || ((year % 100 != 0) && (year % 4 == 0)))
 	{
 		if ((mon == 2) && (_day > 29))
-			throw "Invalid date - month #2";
+			throw "February error";
 	}
-	if ((mon == 4) || (mon == 6) || (mon == 9) || (mon == 11))
+	if (_day > 31)
+	{
+		throw "Day error (must be <= 31)";
+	}
+	else if ((mon == 4) || (mon == 6) || (mon == 9) || (mon == 11))
 	{
 		if (_day >= 31)
-			throw "Invalid date - month";
+			throw "Day error (look at month number)";
 	}
 	day = _day;
 	return *this;
@@ -184,9 +128,9 @@ Date Date::putDate_day(unsigned int _day)
 
 Date Date::putDate_mon(unsigned int _mon)
 {
-	if ((_mon < 0) || (_mon > 12))
+	if (_mon > 12)
 	{
-		throw "Invalid date - month";
+		throw "Month error";
 	}
 	mon = _mon;
 	return *this;
@@ -194,15 +138,11 @@ Date Date::putDate_mon(unsigned int _mon)
 
 Date Date::putDate_year(unsigned int _year)
 {
-	if (_year < 0)
-	{
-		throw "Invalid date - year";
-	}
 	year = _year;
 	return *this;
 }
 
-const Date & Date::operator=(const Date & _Date)
+const Date& Date::operator=(const Date & _Date)
 {
 	day = _Date.day;
 	mon = _Date.mon;
@@ -210,36 +150,113 @@ const Date & Date::operator=(const Date & _Date)
 	return *this;
 }
 
-void Date::print_date()
+bool Date::operator==(const Date& _Date)
 {
-	//
+	if ((day == _Date.day) && (mon == _Date.mon) && (year == _Date.year))
+		return true;
+	return false;
+}
+
+std::ostream & operator<<(std::ostream & x, const Date & _Date)
+{
+	if (_Date.day < 10)
+		x << "0" << _Date.day << ".";
+	else
+		x << _Date.day << ".";
+	if (_Date.mon < 10)
+		x << "0" << _Date.mon << ".";
+	else
+		x << _Date.mon << ".";
+	x << _Date.year;
+	return x;
 }
 
 /////////////////////////////////////////////////////////////////////////
 
 Task::Task()
 {
-	task = nullptr;
+	id = 0;
 }
 
 Task::~Task()
 {
-	delete[] task;
+	id = 0;
+	task = nullptr;
+}
+
+Time Task::set_start(Time x)
+{
+	return Time();
+}
+
+Time Task::set_end(Time x)
+{
+	return Time();
+}
+ 
+/////////////////////////////////////////////////////////////////////////
+
+Type1::Type1()
+{
+	id = 1;
+	task = nullptr;
+}
+
+Type1::~Type1()
+{
+	id = 1;
+	task = nullptr;
+}
+
+Time Type1::get_start()
+{
+	return Time();
+}
+
+Time Type1::get_end()
+{
+	return Time();
 }
 
 void Type1::print()
 {
-
+	std::cout << " " << task << " " << date << std::endl;
 }
 
-void Type1::read()
+Type2::Type2()
 {
-	std::ifstream file;
-	int j;
-	file.open("abc.txt");
-	if (!file.is_open())
-	{
-		throw "File can not be opened!";
-	}
-	file.getline(task, )
+	id = 2;
+}
+
+Type2::~Type2()
+{
+	id = 2;
+	task = nullptr;
+}
+
+Time Type2::get_start()
+{
+	return time_1;
+}
+
+Time Type2::set_start(Time x)
+{
+	time_1 = x;
+	return x;
+}
+
+Time Type2::set_end(Time x)
+{
+	time_2 = x;
+	return x;
+}
+
+Time Type2::get_end()
+{
+	return time_2;
+}
+
+void Type2::print()
+{
+	std::cout << " " << task << " " << date << " start:" << time_1 << " end:" << time_2 << std::endl;
 }
