@@ -192,7 +192,7 @@ void ToDoList::read_tasks()
 	std::string str;
 	std::ifstream file;
 	char number_tasks[2];
-	file.open("test.txt");
+	file.open("paper.txt");
 	if (!file.is_open())
 	{
 		throw "Can't open this file";
