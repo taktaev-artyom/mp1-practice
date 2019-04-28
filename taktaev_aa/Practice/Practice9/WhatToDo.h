@@ -9,7 +9,7 @@ class Time
 	unsigned min;
 public:
 	Time();
-	Time(unsigned int, unsigned int);
+	Time(unsigned, unsigned);
 	Time(const Time&);
 	const Time& operator=(const Time&);
 	friend std::ostream& operator<<(std::ostream&, const Time&);
@@ -24,17 +24,10 @@ class Date
 	unsigned year;
 public:
 	Date();
-	Date(unsigned int, unsigned int, unsigned int);
+	Date(unsigned, unsigned, unsigned);
 	Date(const Date&);
-	unsigned int getDate_day();
-	unsigned int getDate_mon();
-	unsigned int getDate_year();
-	Date putDate_day(unsigned int);
-	Date putDate_mon(unsigned int);
-	Date putDate_year(unsigned int);
 	const Date& operator=(const Date&);
 	bool operator==(const Date&);
-
 	friend std::ostream& operator<<(std::ostream&, const Date&);
 };
 
@@ -48,10 +41,8 @@ public:
 	unsigned id;
 	Task();
 	virtual ~Task();
-	virtual Time get_start() = 0;
-	virtual Time get_end() = 0;
-	virtual Time set_start(Time);
-	virtual Time set_end(Time);
+	virtual void set_start(Time) {};
+	virtual void set_end(Time) {};
 	virtual void print() = 0;
 };
 
@@ -62,9 +53,7 @@ class Type1 : public Task
 public:
 	Type1();
 	~Type1();
-	Time get_start();
-	Time get_end();
-	virtual void print();
+	void print();
 };
 
 ///////////////////////////////////////
@@ -76,22 +65,19 @@ private:
 public:
 	Type2();
 	~Type2();
-	Time get_start();
-	Time get_end();
-	Time set_start(Time);
-	Time set_end(Time);
-	virtual void print();
+	void set_start(Time);
+	void set_end(Time);
+	void print();
 };
 
 ///////////////////////////////////////
 
 class ToDoList
 {
-public:
 	Task** tasks;
-	int number;
-	int read_number();
+public:
+	unsigned number;
 	void read_tasks();
 	void print_tasks();
-	void print_task_date();
+	void print_tasks_by_date();
 };

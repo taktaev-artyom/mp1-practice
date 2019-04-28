@@ -1,4 +1,9 @@
 #include "WhatToDo.h"
+#include <fstream>
+#include <iostream>
+#include <string>
+
+using namespace std;
 
 Time::Time()
 {
@@ -6,13 +11,13 @@ Time::Time()
 	min = 0;
 }
 
-Time::Time(unsigned int _hour, unsigned int _min)
+Time::Time(unsigned _hour, unsigned _min)
 {
-	if ((_hour >= 24) || (_hour < 0))
+	if (_hour >= 24)
 	{
 		throw "Hour error";
 	}
-	if ((_min > 59) || (_min < 0))
+	if (_min >= 60)
 	{
 		throw "Minute error";
 	}
@@ -20,19 +25,20 @@ Time::Time(unsigned int _hour, unsigned int _min)
 	min = _min;
 }
 
-Time::Time(const Time & _Time)
+Time::Time(const Time& _Time)
 {
 	hour = _Time.hour;
 	min = _Time.min;
 }
 
-const Time & Time::operator=(const Time & _Time)
+const Time & Time::operator=(const Time& _Time)
 {
 	hour = _Time.hour;
 	min = _Time.min;
+	return *this;
 }
 
-std::ostream & operator<<(std::ostream & x, const Time & _Time)
+std::ostream & operator<<(std::ostream& x, const Time& _Time)
 {
 	if (_Time.hour < 10)
 		x << "0" << _Time.hour << ":";
@@ -54,7 +60,7 @@ Date::Date()
 	year = 0;
 }
 
-Date::Date(unsigned int _day, unsigned int _mon, unsigned int _year)
+Date::Date(unsigned _day, unsigned _mon, unsigned _year)
 {
 	if (_day > 31)
 	{
@@ -67,79 +73,28 @@ Date::Date(unsigned int _day, unsigned int _mon, unsigned int _year)
 	if ((_year % 400 == 0) || ((_year % 100 != 0) && (_year % 4 == 0)))
 	{
 		if ((_mon == 2) && (_day > 29))
-			throw "February error";
+			throw "February error (leap year)";
 	}
 	else
 	{
 		if ((_mon == 2) && (_day > 28))
-			throw "February error (leap year)";
+			throw "February error (non-leap year)";
 	}
 	if ((_mon == 4) || (_mon == 6) || (_mon == 9) || (_mon == 11))
 	{
 		if (_day >= 31)
-			throw "Invalid date - month";
+			throw "Day error (there is 30 days in this month)";
 	}
 	day = _day;
 	mon = _mon;
 	year = _year;
 }
 
-Date::Date(const Date & _Date)
+Date::Date(const Date& _Date)
 {
 	day = _Date.day;
 	mon = _Date.mon;
 	year = _Date.year;
-}
-
-unsigned int Date::getDate_day()
-{
-	return day;
-}
-
-unsigned int Date::getDate_mon()
-{
-	return mon;
-}
-
-unsigned int Date::getDate_year()
-{
-	return year;
-}
-
-Date Date::putDate_day(unsigned int _day)
-{
-	if (((year % 400) == 0) || ((year % 100 != 0) && (year % 4 == 0)))
-	{
-		if ((mon == 2) && (_day > 29))
-			throw "February error";
-	}
-	if (_day > 31)
-	{
-		throw "Day error (must be <= 31)";
-	}
-	else if ((mon == 4) || (mon == 6) || (mon == 9) || (mon == 11))
-	{
-		if (_day >= 31)
-			throw "Day error (look at month number)";
-	}
-	day = _day;
-	return *this;
-}
-
-Date Date::putDate_mon(unsigned int _mon)
-{
-	if (_mon > 12)
-	{
-		throw "Month error";
-	}
-	mon = _mon;
-	return *this;
-}
-
-Date Date::putDate_year(unsigned int _year)
-{
-	year = _year;
-	return *this;
 }
 
 const Date& Date::operator=(const Date & _Date)
@@ -183,23 +138,12 @@ Task::~Task()
 	id = 0;
 	task = nullptr;
 }
-
-Time Task::set_start(Time x)
-{
-	return Time();
-}
-
-Time Task::set_end(Time x)
-{
-	return Time();
-}
  
 /////////////////////////////////////////////////////////////////////////
 
 Type1::Type1()
 {
 	id = 1;
-	task = nullptr;
 }
 
 Type1::~Type1()
@@ -208,20 +152,12 @@ Type1::~Type1()
 	task = nullptr;
 }
 
-Time Type1::get_start()
-{
-	return Time();
-}
-
-Time Type1::get_end()
-{
-	return Time();
-}
-
 void Type1::print()
 {
-	std::cout << " " << task << " " << date << std::endl;
+	std::cout << " " << date << " " << task << std::endl;
 }
+
+/////////////////////////////////////////////////////////////////////////
 
 Type2::Type2()
 {
@@ -234,29 +170,103 @@ Type2::~Type2()
 	task = nullptr;
 }
 
-Time Type2::get_start()
-{
-	return time_1;
-}
-
-Time Type2::set_start(Time x)
+void Type2::set_start(Time x)
 {
 	time_1 = x;
-	return x;
 }
 
-Time Type2::set_end(Time x)
+void Type2::set_end(Time x)
 {
 	time_2 = x;
-	return x;
-}
-
-Time Type2::get_end()
-{
-	return time_2;
 }
 
 void Type2::print()
 {
-	std::cout << " " << task << " " << date << " start:" << time_1 << " end:" << time_2 << std::endl;
+	std::cout << " " << date << " start: " << time_1 << " end: " << time_2 << " " << task << std::endl;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToDoList::read_tasks()
+{
+	std::string str;
+	std::ifstream file;
+	char number_tasks[2];
+	file.open("paper.txt");
+	if (!file.is_open())
+	{
+		throw "Can't open this file";
+	}
+	file >> number_tasks;
+	number = unsigned(stoul(number_tasks));
+	tasks = new Task*[number];
+	getline(file, str);
+	for (int i = 0; i < number; i++)
+	{
+		getline(file, str);
+		int _type = stoi(str);
+		unsigned _day = unsigned(stoul(str.substr(2, 2)));
+		unsigned _mon = unsigned(stoul(str.substr(5, 2)));
+		unsigned _year = unsigned(stoul(str.substr(8, 4)));
+		Date tmp(_day, _mon, _year);
+		if (_type == 1)
+		{
+			Task* type1 = new Type1;
+			type1->date = tmp;
+			type1->task = str.substr(13);
+			tasks[i] = type1;
+		}
+		else if (_type == 2)
+		{
+			Task* type2 = new Type2;
+			type2->date = tmp;
+			unsigned _h_start = unsigned(stoul(str.substr(13, 2)));
+			unsigned _m_start = unsigned(stoul(str.substr(16, 2)));
+			Time _start(_h_start, _m_start);
+			type2->set_start(_start);
+			unsigned _h_end = unsigned(stoul(str.substr(19, 2)));
+			unsigned _m_end = unsigned(stoul(str.substr(22, 2)));
+			type2->task = str.substr(25);
+			Time _end(_h_end, _m_end);
+			type2->set_end(_end);
+			tasks[i] = type2;
+		}
+		else throw "Wrong type";
+	}
+	file.close();
+}
+
+void ToDoList::print_tasks()
+{
+	cout << "Your tasks: " << endl;
+	for (int i = 0; i < number; i++)
+		tasks[i]->print();
+}
+
+void ToDoList::print_tasks_by_date()
+{
+	unsigned _year, _mon, _day;
+	cout << "Enter day: ";
+	cin >> _day;
+	cout << endl;
+	cout << "Enter month: ";
+	cin >> _mon;
+	cout << endl;
+	cout << "Enter year: ";
+	cin >> _year;
+	cout << endl;
+	Date tmp(_day, _mon, _year);
+	int flag = 0;
+	for (int i = 0; i < number; i++)
+	{
+		if (tmp == tasks[i]->date)
+		{
+			tasks[i]->print();
+			flag = 1;
+		}
+	}
+	if (flag == 0)
+	{
+		cout << "This day is absolutely free, do whatever you want" << endl;
+	}
 }
