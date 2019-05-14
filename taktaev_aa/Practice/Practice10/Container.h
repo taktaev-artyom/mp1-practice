@@ -60,7 +60,7 @@ int Container<T, maxsize>::Find(T a) const
 	if (IsEmpty()) throw "Container is empty(nothing to find)";
 	for (int i = 0; i < realsize; i++)
 		if (arr[i] == a) return i;
-	throw "There is no such element";
+	return -1;
 }
 
 template<typename T, int maxsize>
@@ -74,8 +74,9 @@ template<typename T, int maxsize>
 void Container<T, maxsize>::Delete(T a)
 {
 	if (IsEmpty()) throw "Container is empty(nothing to delete)";
-	arr[Find(a)] = arr[realsize-1];
-	realsize--;
+	int idx = Find(a);
+	if (idx == -1) throw "Cannot find an element";
+	arr[idx] = arr[--realsize];
 }
 
 template<typename T, int maxsize>
@@ -91,11 +92,11 @@ void Container<T, maxsize>::print()
 template <typename T, int maxsize>
 class Container<T*, maxsize>
 {
-	T* arr;
+	T** arr;
 	int realsize;
 public:
 	Container();
-	Container(const Container& a);
+	Container(const Container<T*, maxsize>& a);
 	~Container();
 	bool IsFull() const;
 	bool IsEmpty() const;
@@ -109,7 +110,7 @@ template<typename T, int maxsize>
 Container<T*, maxsize>::Container()
 {
 	realsize = 0;
-	arr = new T[maxsize];
+	arr = new T*[maxsize];
 }
 
 template<typename T, int maxsize>
@@ -124,5 +125,52 @@ Container<T*, maxsize>::Container(const Container<T*, maxsize>& a)
 template<typename T, int maxsize>
 Container<T*, maxsize>::~Container()
 {
-	delete[] arr;
+	for (int i = 0; i < realsize; i++)
+		delete arr[i];
+}
+
+template<typename T, int maxsize>
+bool Container<T*, maxsize>::IsFull() const
+{
+	return (realsize == maxsize);
+}
+
+template<typename T, int maxsize>
+bool Container<T*, maxsize>::IsEmpty() const
+{
+	return (realsize == 0);
+}
+
+template<typename T, int maxsize>
+int Container<T*, maxsize>::Find(T a) const
+{
+	if (IsEmpty()) throw "Container is empty(nothing to find)*";
+	for (int i = 0; i < realsize; i++)
+		if (*(arr[i]) == a) return i;
+	return -1;
+}
+
+template<typename T, int maxsize>
+void Container<T*, maxsize>::Add(T a)
+{
+	if (IsFull()) throw "Container is full(cannot add an element)*";
+	arr[realsize++] = new T(a);
+}
+
+template<typename T, int maxsize>
+void Container<T*, maxsize>::Delete(T a)
+{
+	if (IsEmpty()) throw "Container is empty(nothing to delete)*";
+	int idx = Find(a);
+	if (idx == -1) throw "Cannot find an element*";
+	delete arr[idx];
+	arr[idx] = arr[--realsize];
+}
+
+template<typename T, int maxsize>
+void Container<T*, maxsize>::print()
+{
+	if (IsEmpty()) throw "Container is empty(nothing to print)*";
+	for (int i = 0; i < realsize; i++)
+		cout << "Dereferenced element[" << i << "] = " << *(arr[i]) << endl;
 }
