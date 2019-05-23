@@ -41,9 +41,6 @@ public:
 	unsigned id;
 	Task();
 	virtual ~Task();
-	virtual void set_start(Time) {};
-	virtual void set_end(Time) {};
-	virtual void print() = 0;
 };
 
 ///////////////////////////////////////
