@@ -7,7 +7,7 @@
 void main() 
 {
     int rezhim, nkomp = 0, nchel = 0, popitki = 0, gr1 = 1, gr2 = 1000, f = 0; //gr1 и gr2 - границы чисел
-    char znak, enter;
+    char znak;
     setlocale(LC_ALL, "Russian");
     srand((unsigned int)time(0));
     printf("Добро пожаловать в 'Угадай число'! Выберите режим: вы угадываете число компьютера(введите 1) или компьютер угадывает ваше число(введите 2): \n");
@@ -78,8 +78,7 @@ void main()
             return;
         }
         f = 0;
-        scanf("%c", &enter); //без этой сроки программа в переменную znak записывает Enter
-        scanf("%c", &znak);
+        scanf("%*c%c", &znak);
         if(znak == '>') 
         {
             gr2 = nkomp;
