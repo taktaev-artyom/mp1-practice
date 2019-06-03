@@ -11,8 +11,8 @@ typedef struct
 
 Vector create(int n);
 void deleteV(Vector x);
-Vector addition(Vector a, Vector b, int* f);
-Vector subtraction(Vector a, Vector b, int* f);
-double scalar(Vector a, Vector b, int* f);
-double angle(Vector a, Vector b, int* f);
-double length(Vector x, int* f);
+int addition(Vector a, Vector b, Vector* res);
+int subtraction(Vector a, Vector b, Vector* res);
+int scalar(Vector a, Vector b, double* res);
+int angle(Vector a, Vector b, double* res);
+int length(Vector x, double* res);
