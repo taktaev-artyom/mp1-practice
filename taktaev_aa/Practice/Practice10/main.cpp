@@ -4,7 +4,7 @@ using namespace std;
 
 int main()
 {
-	Container<int, 10> x;
+	Container<int> x;
 	try
 	{
 		x.Add(1);
@@ -19,7 +19,7 @@ int main()
 		cout << k << endl;
 	}
 	cout << "Version 2:" << endl;
-	Container<int*, 10> x1;
+	Container<int*> x1;
 	try
 	{
 		x1.Add(11);
@@ -37,7 +37,7 @@ int main()
 	/////////////////ERRORS//////////////////
 
 	cout << "Error test:" << endl;
-	Container<int, 10> a;
+	Container<int> a;
 	try
 	{
 		a.Delete(2);
@@ -46,7 +46,7 @@ int main()
 	{
 		cout << k << endl;
 	}
-	Container<int, 10> b;
+	Container<int> b;
 	try
 	{
 		b.Add(1);
@@ -57,7 +57,7 @@ int main()
 	{
 		cout << k << endl;
 	}
-	Container<int, 10> c;
+	Container<int> c;
 	try
 	{
 		c.Add(1);
@@ -67,7 +67,7 @@ int main()
 	{
 		cout << k << endl;
 	}
-	Container<int, 10> d;
+	Container<int> d;
 	try
 	{
 		d.print();
@@ -76,19 +76,8 @@ int main()
 	{
 		cout << k << endl;
 	}
-	Container<int, 10> e;
-	try
-	{
-		for (int i = 0; i < 10; i++)
-			e.Add(i);
-		e.Add(13);
-	}
-	catch (const char* k)
-	{
-		cout << k << endl;
-	}
 	cout << "Error test 2:" << endl;
-	Container<int, 10> a1;
+	Container<int*> a1;
 	try
 	{
 		a1.Delete(2);
@@ -97,7 +86,7 @@ int main()
 	{
 		cout << k << endl;
 	}
-	Container<int, 10> b1;
+	Container<int*> b1;
 	try
 	{
 		b1.Add(1);
@@ -108,7 +97,7 @@ int main()
 	{
 		cout << k << endl;
 	}
-	Container<int, 10> c1;
+	Container<int*> c1;
 	try
 	{
 		c1.Add(1);
@@ -118,21 +107,10 @@ int main()
 	{
 		cout << k << endl;
 	}
-	Container<int, 10> d1;
+	Container<int*> d1;
 	try
 	{
 		d1.print();
-	}
-	catch (const char* k)
-	{
-		cout << k << endl;
-	}
-	Container<int, 10> e1;
-	try
-	{
-		for (int i = 0; i < 10; i++)
-			e1.Add(i);
-		e1.Add(13);
 	}
 	catch (const char* k)
 	{
