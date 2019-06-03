@@ -240,6 +240,14 @@ void menu()
     printf("Enter 0 to close the programm.\n");
     printf("Your choice: ");
 }
+void print2(ULONGLONG* filesize, wchar_t** fileNames, int kolvo, int* newindex)
+{
+	int i;
+	for (i = 0; i < kolvo; i++)
+	{
+		wprintf(L"file %s size %lld bytes\n", fileNames[newindex[i]], filesize[i]);
+	}
+}
 void main()
 {
     int i = 0;
@@ -283,14 +291,11 @@ void main()
         case 1:
             scanf("%c", &e);
             zeroing(filesizemain, filesize, filesindex, newindex, kolvo);
-            start = clock();
             printf("Selection sort.\n");
+			start = clock();
             choose(filesize, kolvo, newindex);
             end = clock();
-            for (i = 0; i < kolvo; i++)
-            {
-                wprintf(L"file %s size %lld bytes\n", fileNames[newindex[i]], filesize[i]);
-            }
+			print2(filesize, fileNames, kolvo, newindex);
             total_time = (double)(end - start) / CLOCKS_PER_SEC;
             printf("Time: %.5lf sec\n", total_time);
             break;
@@ -301,10 +306,7 @@ void main()
             printf("Insertion sort.\n");
             insert(filesize, newindex, kolvo);
             end = clock();
-            for (i = 0; i < kolvo; i++)
-            {
-                wprintf(L"file %s size %lld bytes\n", fileNames[newindex[i]], filesize[i]);
-            }
+			print2(filesize, fileNames, kolvo, newindex);
             total_time = (double)(end - start) / CLOCKS_PER_SEC;
             printf("Time: %.5lf sec\n", total_time);
             break;
@@ -315,10 +317,7 @@ void main()
             printf("Bubble sort.\n");
             bubblesort(filesize, newindex, kolvo);
             end = clock();
-            for (i = 0; i < kolvo; i++)
-            {
-                wprintf(L"file %s size %lld bytes\n", fileNames[newindex[i]], filesize[i]);
-            }
+			print2(filesize, fileNames, kolvo, newindex);
             total_time = (double)(end - start) / CLOCKS_PER_SEC;
             printf("Time: %.5lf sec\n", total_time);
             break;
@@ -329,10 +328,7 @@ void main()
             printf("Counting sort.\n");
             countingsort(filesize, kolvo, newindex);
             end = clock();
-            for (i = 0; i < kolvo; i++)
-            {
-                wprintf(L"file %s size %lld bytes\n", fileNames[newindex[i]], filesize[i]);
-            }
+			print2(filesize, fileNames, kolvo, newindex);
             total_time = (double)(end - start) / CLOCKS_PER_SEC;
             printf("Time: %.5lf sec\n", total_time);
             break;
@@ -343,10 +339,7 @@ void main()
             printf("Quick sort.\n");
             newindex = quicksort(filesize, 0, kolvo - 1, kolvo, filesindex);
             end = clock();
-            for (i = 0; i < kolvo; i++)
-            {
-                wprintf(L"file %s size %lld bytes\n", fileNames[newindex[i]], filesize[i]);
-            }
+			print2(filesize, fileNames, kolvo, newindex);
             total_time = (double)(end - start) / CLOCKS_PER_SEC;
             printf("Time: %.5lf sec\n", total_time);
             break;
@@ -357,10 +350,7 @@ void main()
             printf("Merge sort.\n");
             mergesort(newindex, filesize, 0, (kolvo - 1));
             end = clock();
-            for (i = 0; i < kolvo; i++)
-            {
-                wprintf(L"file %s size %lld bytes\n", fileNames[newindex[i]], filesize[newindex[i]]);
-            }
+			print2(filesize, fileNames, kolvo, newindex);
             total_time = (double)(end - start) / CLOCKS_PER_SEC;
             printf("Time: %.5lf sec\n", total_time);
             break;
